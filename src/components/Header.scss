@@ -1,0 +1,22 @@
+.header {
+  // display: flex;
+  // justify-content: space-around;
+  // align-items: center;
+
+  margin-top: 30px;
+
+  span.status {
+    display: block;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+  }
+
+  .connected {
+    background-color: rgb(114, 164, 30);
+  }
+
+  .disconnected {
+    background-color: rgb(222, 19, 19);
+  }
+}
