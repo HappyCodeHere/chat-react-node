@@ -8,6 +8,10 @@ const io = require('socket.io').listen(server);
 
 app.use(express.static('../build'));
 
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '..build/index.html');
+});
+
 let connections = [];
 let audience = [];
 let title = 'Untitled Presentation';
