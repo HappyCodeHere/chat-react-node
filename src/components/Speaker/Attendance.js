@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
-const propTypes = {
 
+const propTypes = {
+  audience: PropTypes.array.isRequired
 }
 
 class Attendance extends Component {
@@ -17,8 +18,8 @@ class Attendance extends Component {
 
   render() {
     return (
-      <div className="">
-        <h2>Attendance - {this.props.audience.length} members</h2>
+      <div className="attendance">
+        <h2>Attendance &ndash; {this.props.audience.length} members</h2>
         <table className="table table-striped">
           <thead>
             <tr>

@@ -1,21 +1,29 @@
 import React, { PropTypes } from 'react';
+// import { browserHistory } from 'react-router';
 
 import './Header.scss';
 
-const propTypes = {
 
+const propTypes = {
+  status: PropTypes.string.isRequired,
+  speaker: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  leave: PropTypes.func.isRequired
 }
 
 const Header = (props) => {
-  console.log(props.speaker)
+  const { title, speaker, status } = props;
   return (
-    <header className="header row">
+    <header className="row header">
       <div className="col-xs-10">
-        <h1>{props.title}</h1>
-        <p>{props.speaker}</p>
+        <h1>{title}</h1>
+        <p>{speaker}</p>
       </div>
+      {/*<div className="col-xs-1">
+        <span onClick={() => props.leave()}>x</span>
+      </div>*/}
       <div className="col-xs-2">
-        <span className={`status ${props.status}`}></span>
+        <span className={`status ${status}`}></span>
       </div>
     </header>
   )

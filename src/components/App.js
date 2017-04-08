@@ -19,16 +19,20 @@ class App extends Component {
       speaker: '',
       questions: [],
       currentQuestion: false,
+      results: {}
     }
 
     this.connect = this.connect.bind(this);
     this.disconnect = this.disconnect.bind(this);
     this.updateState = this.updateState.bind(this);
-    this.emit = this.emit.bind(this);
     this.joined = this.joined.bind(this);
     this.updateAudience = this.updateAudience.bind(this);
     this.start = this.start.bind(this);
     this.ask = this.ask.bind(this);
+    this.updateResults = this.updateResults.bind(this);
+
+    this.emit = this.emit.bind(this);
+    this.leave = this.leave.bind(this);
   }
 
   componentWillMount() {
@@ -41,6 +45,7 @@ class App extends Component {
     this.socket.on('start', this.start);
     this.socket.on('end', this.updateState);
     this.socket.on('ask', this.ask);
+    this.socket.on('results', this.updateResults)
   }
 
   emit(eventName, payload) {
@@ -68,14 +73,10 @@ class App extends Component {
   }
 
   updateState(serverState) {
-    console.info(serverState);
-    this.setState({...serverState}, () => {
-      console.log(this.state);
-    })
+    this.setState({...serverState});
   }
 
   joined(member) {
-    console.log(member, 'here');
     sessionStorage.member = JSON.stringify(member);
     this.setState({member: member});
   }
@@ -88,17 +89,31 @@ class App extends Component {
     if (this.state.member.type === 'speaker') {
       sessionStorage.title = presentation.title;
     }
-    this.setState(presentation); //!!!
+    this.setState(presentation);
   }
 
   ask(question) {
-    this.setState({ currentQuestion: question});
+    sessionStorage.answer = '';
+    this.setState({
+      currentQuestion: question,
+      results: {a: 0, b: 0, c: 0, d: 0}
+    });
+  }
+
+  updateResults(data) {
+    this.setState({results: data});
+  }
+
+  leave() {
+    this.emit('leave', this.state.member);
+    sessionStorage.member = '';
+    this.setState({member: {}});
   }
 
   render() {
     return (
-      <div className="app">
-        <Header {...this.state} />
+      <div className="app container">
+        <Header {...this.state} leave={this.leave} />
         {
           this.props.children && React.cloneElement(this.props.children, {
               ...this.state,
