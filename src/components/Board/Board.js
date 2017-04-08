@@ -31,9 +31,6 @@ class Board extends Component {
 
             this.props.currentQuestion ?
               <div>
-                <h3>{this.props.currentQuestion.q}</h3>
-                <p>{JSON.stringify(this.props.results)}</p>
-
                 <BarChart
                   data={this.barGraphData(this.props.results)}
                   title={this.props.currentQuestion.q}
