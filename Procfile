@@ -1,1 +1,1 @@
-web: sh -c 'cd ./server/ && exec node app.js'
+web: sh -c 'cd ./server/ && exec npm i && exec node app.js'
