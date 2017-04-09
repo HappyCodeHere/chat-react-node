@@ -6,7 +6,7 @@ const port = process.env.PORT || 3001;
 const server = app.listen(port);
 const io = require('socket.io').listen(server);
 
-app.use(express.static('../build'));
+app.use(express.static(__dirname + '/../build'));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/../build');
