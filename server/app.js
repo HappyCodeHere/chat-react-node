@@ -8,9 +8,9 @@ const io = require('socket.io').listen(server);
 
 app.use(express.static(__dirname + '/../build'));
 
-// app.get('/', function(req, res){
-//   res.sendFile(__dirname + '/../build');
-// });
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/../build');
+});
 
 let connections = [];
 let audience = [];
