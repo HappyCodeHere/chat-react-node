@@ -8,9 +8,9 @@ const io = require('socket.io').listen(server);
 
 app.use(express.static(__dirname + '/../build'));
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/../build');
-});
+// app.get('/', function(req, res){
+//   res.sendFile(__dirname + '/../build');
+// });
 
 let connections = [];
 let audience = [];
@@ -58,15 +58,13 @@ io.sockets.on('connection', function (socket) {
     console.log('Audience Joined: %s', payload.name);
   });
 
-  socket.on('leave', function(member) {
-    const lll = _.findWhere(audience, { id: this.id });
-    console.log(lll);
-    // let lll = audience.indexOf(member);
-    // console.log(lll);
+  socket.on('leave', function(leftMember) {
+    const member = _.findWhere(audience, leftMember);
 
     if (member) {
       audience.splice(audience.indexOf(member), 1);
       io.sockets.emit('audience', audience);
+
       console.log('Left: %s (%s audience members)', member.name, audience.length);
     } else if (this.id === speaker.id) {
       console.log('%s has left. "%s" is over.', speaker.name, title);
@@ -75,10 +73,7 @@ io.sockets.on('connection', function (socket) {
       io.sockets.emit('end', { title: title, speaker: '' });
     }
 
-    // connections.splice(connections.indexOf(socket), 1);
-    // socket.disconnect();
-    console.log('Leave: %s.', member.name);
-
+    console.log('Someone has left: %s.', leftMember.name);
   });
 
   socket.on('start', function(payload) {

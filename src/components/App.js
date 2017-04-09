@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 
 import io from 'socket.io-client';
 
@@ -105,9 +106,11 @@ class App extends Component {
   }
 
   leave() {
-    this.emit('leave', this.state.member);
     sessionStorage.member = '';
+    sessionStorage.title = '';
+    this.emit('leave', this.state.member);
     this.setState({member: {}});
+    browserHistory.push('/');
   }
 
   render() {

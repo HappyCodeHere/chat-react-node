@@ -1,1 +1,1 @@
-Making chat with React, Node and Socket.io!
+Making polling app with React, Node and Socket.io!

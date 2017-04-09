@@ -1,6 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 
+import { Link } from 'react-router';
+
 import { BarChart } from 'react-d3';
+
+import './Board.scss';
 
 
 const propTypes = {
@@ -29,19 +33,24 @@ class Board extends Component {
         {
           this.props.status === 'connected' ?
 
-            this.props.currentQuestion ?
-              <div>
-                <BarChart
-                  data={this.barGraphData(this.props.results)}
-                  title={this.props.currentQuestion.q}
-                  height={window.innerHeight * 0.6}
-                  width={window.innerWidth * 0.9}
-                />
-              </div> :
+            <div>
+              {
+                this.props.currentQuestion ?
+                  <div>
+                    <BarChart
+                      data={this.barGraphData(this.props.results)}
+                      title={this.props.currentQuestion.q}
+                      height={window.innerHeight * 0.6}
+                      width={window.innerWidth * 0.8}
+                    />
+                  </div> :
 
-              <div>
-                <h3>Awaiting a Question...</h3>
-              </div>
+                  <div>
+                    <h3>Awaiting a Question...</h3>
+                  </div>
+                }
+                <Link to='/' className="btn btn-danger">Back</Link>
+            </div>
 
             : null
         }
